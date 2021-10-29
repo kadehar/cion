@@ -1,5 +1,6 @@
 package com.github.kadehar.cion.feature.movies_screen.ui
 
+import com.github.kadehar.cion.base.nav.Screens
 import com.github.kadehar.cion.base.view_model.BaseViewModel
 import com.github.kadehar.cion.base.view_model.Event
 import com.github.kadehar.cion.feature.movies_screen.domain.MoviesInteractor
@@ -35,7 +36,7 @@ class MoviesListViewModel(
                 )
             }
             is UiEvent.OnPosterClick -> {
-                //router
+                router.navigateTo(Screens.movieCard(event.movie))
             }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(
