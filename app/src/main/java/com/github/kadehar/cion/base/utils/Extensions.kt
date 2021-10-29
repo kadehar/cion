@@ -8,6 +8,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.github.kadehar.cion.R
 import com.github.kadehar.cion.base.constants.Constants.DEFAULT_THROTTLE_DELAY
+import com.hannesdorfmann.adapterdelegates4.AbsDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 fun View.setThrottledClickListener(delay: Long = DEFAULT_THROTTLE_DELAY, onClick: (View) -> Unit) {
     setOnClickListener {
@@ -42,4 +44,14 @@ fun ImageView.loadImage(
         .placeholder(placeholderRes)
         .apply { config(this) }
         .into(this)
+}
+
+fun <T> AbsDelegationAdapter<T>.setData(data: T) {
+    items = data
+    notifyDataSetChanged()
+}
+
+fun <T> AsyncListDifferDelegationAdapter<T>.setData(data: List<T>) {
+    items = data
+    notifyDataSetChanged()
 }
