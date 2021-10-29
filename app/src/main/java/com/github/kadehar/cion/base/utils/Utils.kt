@@ -1,5 +1,6 @@
 package com.github.kadehar.cion.base.utils
 
+import com.github.kadehar.cion.feature.movies_screen.domain.model.Genre
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,7 +15,6 @@ fun formatDate(date: String): String {
     }
 }
 
-/*
-fun genresToString(genres: List<MovieGenre>): String {
+fun genresToString(genres: List<Genre>): String {
     return genres.joinToString() { genre -> genre.name }
-}*/
+}
