@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.kadehar.cion.R
+import com.github.kadehar.cion.base.nav.Screens
 import com.github.kadehar.cion.base.utils.formatDate
 import com.github.kadehar.cion.base.utils.genresToString
 import com.github.kadehar.cion.base.utils.loadImage
@@ -37,6 +38,9 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
             cardMovieReleaseDate.text = formatDate(movie.releaseDate)
             cardMovieGenres.text = genresToString(movie.genres)
             cardMovieOverview.text = movie.overview
+            cardMoviePlayButton.setOnClickListener {
+                router.navigateTo(Screens.moviePlayer(movie))
+            }
         }
     }
 }
