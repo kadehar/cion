@@ -6,6 +6,7 @@ CiOn supports two themes - Light and Dark.
 ### Main Screen
 On the main screen you will see some movies posters, which you can scroll horizontally.
 Tap on the poster will open Movie Card Screen.
+
 ![](readmeFiles/mainScreen.gif)
 
 ### Movie Card Screen
