@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BaseTheme">
+        <!-- region  Theme attributes according to design system  -->
+
+        <attr name="colorPromoted" format="color" />
+        <attr name="colorAccented" format="color" />
+
+        <attr name="colorBackground" format="color" />
+
+        <attr name="colorSurfaceMain" format="color|reference" />
+        <attr name="colorSurfaceNative" format="color|reference" />
+        <attr name="colorSurfaceAccent" format="color|reference" />
+        <attr name="colorSurfaceVariant" format="color|reference" />
+
+        <attr name="colorOnSurfaceFirstPriority" format="color" />
+        <attr name="colorOnSurfaceHighEmphasis" format="color" />
+        <attr name="colorOnSurfaceMediumEmphasis" format="color" />
+        <attr name="colorOnSurfaceDisabled" format="color" />
+        <attr name="colorOnSurfaceOutline" format="color" />
+        <attr name="colorOnSurfaceAccent" format="color" />
+
+        <attr name="colorOnSurfacePrimary" format="color" />
+        <attr name="colorOnSurfaceError" format="color" />
+    </declare-styleable>
+</resources>
