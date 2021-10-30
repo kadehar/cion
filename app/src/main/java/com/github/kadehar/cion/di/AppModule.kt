@@ -43,11 +43,3 @@ val navModule = module {
         get<Cicerone<Router>>().router
     }
 }
-
-val videoPlayerModule = module {
-    single<ExoPlayer> {
-        SimpleExoPlayer
-            .Builder(androidApplication())
-            .build()
-    }
-}
