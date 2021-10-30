@@ -1,7 +1,9 @@
 package com.github.kadehar.cion
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.github.kadehar.cion.base.nav.Screens
 import com.github.kadehar.cion.base.nav.listeners.BackButtonListener
 import com.github.terrakok.cicerone.Command
@@ -9,6 +11,7 @@ import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +21,20 @@ class MainActivity : AppCompatActivity() {
             override fun applyCommands(commands: Array<out Command>) {
                 super.applyCommands(commands)
                 supportFragmentManager.executePendingTransactions()
+            }
+
+            override fun setupFragmentTransaction(
+                screen: FragmentScreen,
+                fragmentTransaction: FragmentTransaction,
+                currentFragment: Fragment?,
+                nextFragment: Fragment
+            ) {
+                fragmentTransaction.setCustomAnimations(
+                    R.anim.slide_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.slide_out
+                )
             }
         }
     private val router by inject<Router>()

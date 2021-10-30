@@ -6,7 +6,11 @@ import com.github.kadehar.cion.base.network.okHttp
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -37,5 +41,13 @@ val navModule = module {
 
     single<Router> {
         get<Cicerone<Router>>().router
+    }
+}
+
+val videoPlayerModule = module {
+    single<ExoPlayer> {
+        SimpleExoPlayer
+            .Builder(androidApplication())
+            .build()
     }
 }
