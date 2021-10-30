@@ -1,7 +1,7 @@
 package com.github.kadehar.cion
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.github.kadehar.cion.base.nav.Screens

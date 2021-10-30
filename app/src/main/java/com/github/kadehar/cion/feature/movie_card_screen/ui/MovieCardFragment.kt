@@ -39,7 +39,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
             cardMovieGenres.text = genresToString(movie.genres)
             cardMovieOverview.text = movie.overview
             cardMoviePlayButton.setOnClickListener {
-                router.navigateTo(Screens.moviePlayer(movie))
+                router.navigateTo(Screens.moviePlayer(movie.video))
             }
         }
     }

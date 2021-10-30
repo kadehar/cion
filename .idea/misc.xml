@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/learn/android/CiOn/app/src/main/res/layout/activity_main.xml" value="0.340625" />
+        <entry key="..\:/learn/android/CiOn/app/src/main/res/layout/custom_player_controls_view.xml" value="0.3546875" />
         <entry key="..\:/learn/android/CiOn/app/src/main/res/layout/fragment_movie_card.xml" value="0.3546875" />
         <entry key="..\:/learn/android/CiOn/app/src/main/res/layout/fragment_movie_player.xml" value="0.3546875" />
         <entry key="..\:/learn/android/CiOn/app/src/main/res/layout/fragment_movies_list.xml" value="0.3546875" />
