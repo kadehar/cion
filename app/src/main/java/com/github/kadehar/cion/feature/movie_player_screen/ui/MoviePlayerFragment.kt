@@ -1,8 +1,6 @@
 package com.github.kadehar.cion.feature.movie_player_screen.ui
 
 import android.annotation.SuppressLint
-import android.view.View
-import android.view.WindowInsetsController
 import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,7 +11,6 @@ import com.github.kadehar.cion.R
 import com.github.kadehar.cion.databinding.FragmentMoviePlayerBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import org.koin.android.ext.android.inject
 
@@ -32,7 +29,7 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
         requireArguments().getString(URL_KEY)!!
     }
 
-    private var player: SimpleExoPlayer? = null
+    private val exoPlayer by inject<ExoPlayer>()
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
@@ -70,14 +67,13 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
     }
 
     private fun initializePlayer() {
-        player = SimpleExoPlayer.Builder(requireContext())
-            .build().also { videoPlayer ->
-                binding.videoPlayerView.player = videoPlayer
-                videoPlayer.setMediaItem(MediaItem.fromUri(url))
-                videoPlayer.playWhenReady = playWhenReady
-                videoPlayer.seekTo(currentWindow, playbackPosition)
-                videoPlayer.prepare()
-            }
+        binding.videoPlayerView.apply {
+            player = exoPlayer
+            exoPlayer.setMediaItem(MediaItem.fromUri(url))
+        }
+        exoPlayer.playWhenReady = playWhenReady
+        exoPlayer.seekTo(currentWindow, playbackPosition)
+        exoPlayer.prepare()
     }
 
     @SuppressLint("InlinedApi")
@@ -111,12 +107,11 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
     }
 
     private fun releasePlayer() {
-        player?.run {
+        exoPlayer.run {
             playbackPosition = this.currentPosition
             currentWindow = this.currentWindowIndex
             playWhenReady = this.playWhenReady
             release()
         }
-        player = null
     }
 }

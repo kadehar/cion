@@ -8,7 +8,6 @@ import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -41,5 +40,11 @@ val navModule = module {
 
     single<Router> {
         get<Cicerone<Router>>().router
+    }
+}
+
+val videoPlayerModule = module {
+    factory<ExoPlayer> {
+        SimpleExoPlayer.Builder(androidApplication()).build()
     }
 }
