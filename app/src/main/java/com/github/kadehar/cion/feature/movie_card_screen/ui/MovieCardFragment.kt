@@ -6,14 +6,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.kadehar.cion.R
-import com.github.kadehar.cion.base.nav.Screens
 import com.github.kadehar.cion.base.utils.formatDate
 import com.github.kadehar.cion.base.utils.genresToString
 import com.github.kadehar.cion.base.utils.loadImage
 import com.github.kadehar.cion.databinding.FragmentMovieCardBinding
 import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
-import com.github.terrakok.cicerone.Router
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
     companion object {
@@ -27,7 +25,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
     private val movie: Movie by lazy {
         requireArguments().getParcelable(MOVIE_KEY)!!
     }
-    private val router by inject<Router>()
+    private val viewModel by viewModel<MovieCardViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +37,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
             cardMovieGenres.text = genresToString(movie.genres)
             cardMovieOverview.text = movie.overview
             cardMoviePlayButton.setOnClickListener {
-                router.navigateTo(Screens.moviePlayer(movie.video))
+                viewModel.processUiEvent(MovieCardUiEvent.OnPlayButtonClicked(movie))
             }
         }
     }
