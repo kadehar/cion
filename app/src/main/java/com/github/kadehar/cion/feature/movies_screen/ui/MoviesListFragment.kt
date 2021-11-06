@@ -9,7 +9,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.kadehar.cion.R
 import com.github.kadehar.cion.base.utils.setData
 import com.github.kadehar.cion.databinding.FragmentMoviesListBinding
-import com.github.kadehar.cion.feature.movies_screen.ui.adapter.MoviesAdapter
+import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
+import com.github.kadehar.cion.feature.movies_screen.ui.adapter.movieAdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
@@ -19,11 +21,14 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
     private val binding: FragmentMoviesListBinding by viewBinding(FragmentMoviesListBinding::bind)
     private val viewModel: MoviesListViewModel by viewModel()
-    private val moviesAdapter: MoviesAdapter by lazy {
-        MoviesAdapter(onItemClick = { movie ->
-            viewModel.processUiEvent(UiEvent.OnPosterClick(movie))
-        })
-    }
+    private val moviesAdapter
+            by lazy(LazyThreadSafetyMode.NONE) {
+                ListDelegationAdapter(
+                    movieAdapterDelegate { movie ->
+                        viewModel.processUiEvent(UiEvent.OnPosterClick(movie))
+                    }
+                )
+            }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +44,6 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
                 LinearLayoutManager.HORIZONTAL, false
             )
         }
-        moviesAdapter.items = viewModel.viewState.value?.movies
     }
 
     private fun render(viewState: ViewState) {
