@@ -40,23 +40,19 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
         override fun onServiceDisconnected(name: ComponentName?) {}
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            if (service is PlayerVideoService.PlayerVideoServiceBinder) {
-                binding.videoPlayerView.player = service.getPlayerInstance()
+            when (service) {
+                is PlayerVideoService.PlayerVideoServiceBinder -> {
+                    binding.videoPlayerView.player = service.getPlayerInstance()
+                }
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val intent = Intent(context, PlayerVideoService::class.java)
         intent.putExtra(PlayerVideoService.VIDEO_FILE, url)
         requireActivity().bindService(intent, connection, Context.BIND_AUTO_CREATE)
-//
-//        binding.videoPlayerView.apply {
-//            player = viewModel.exoPlayer
-//            viewModel.processUiEvent(PlayerUiEvent.OnPlayerStarted(url))
-//        }
     }
 
     override fun onStart() {
