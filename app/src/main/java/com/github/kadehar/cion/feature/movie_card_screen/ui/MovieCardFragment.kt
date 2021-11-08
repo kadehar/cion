@@ -12,6 +12,7 @@ import com.github.kadehar.cion.base.utils.loadImage
 import com.github.kadehar.cion.databinding.FragmentMovieCardBinding
 import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
     companion object {
@@ -25,7 +26,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
     private val movie: Movie by lazy {
         requireArguments().getParcelable(MOVIE_KEY)!!
     }
-    private val viewModel by viewModel<MovieCardViewModel>()
+    private val viewModel by viewModel<MovieCardViewModel>() { parametersOf(movie) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
