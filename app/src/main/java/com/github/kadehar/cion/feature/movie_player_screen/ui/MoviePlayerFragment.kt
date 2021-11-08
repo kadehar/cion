@@ -1,18 +1,22 @@
 package com.github.kadehar.cion.feature.movie_player_screen.ui
 
-import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.Bundle
+import android.os.IBinder
+import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.kadehar.cion.R
+import com.github.kadehar.cion.base.utils.hideSystemUI
+import com.github.kadehar.cion.base.utils.showSystemUI
 import com.github.kadehar.cion.databinding.FragmentMoviePlayerBinding
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.util.Util
-import org.koin.android.ext.android.inject
+import com.github.kadehar.cion.feature.movie_player_screen.service.PlayerService
+
 
 class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
     companion object {
@@ -29,89 +33,51 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
         requireArguments().getString(URL_KEY)!!
     }
 
-    private val exoPlayer by inject<ExoPlayer>()
-    private var playWhenReady = true
-    private var currentWindow = 0
-    private var playbackPosition = 0L
+    private val playerActivity: FragmentActivity by lazy {
+        requireActivity()
+    }
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {}
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            when (service) {
+                is PlayerService.PlayerServiceBinder -> {
+                    binding.videoPlayerView.player = service.getPlayer()
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val intent = Intent(context, PlayerService::class.java)
+        intent.putExtra(PlayerService.VIDEO_FILE, url)
+        playerActivity.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        playerActivity.unbindService(connection)
+    }
 
     override fun onStart() {
         super.onStart()
-        hideSystemUi()
-        if (Util.SDK_INT >= 24) {
-            initializePlayer()
-        }
+        hideSystemUI(requireActivity().window, binding.videoPlayerView)
     }
 
     override fun onResume() {
         super.onResume()
-        hideSystemUi()
-        if ((Util.SDK_INT < 24)) {
-            initializePlayer()
-        }
+        hideSystemUI(requireActivity().window, binding.videoPlayerView)
     }
 
     override fun onPause() {
         super.onPause()
-        showSystemUi()
-        if (Util.SDK_INT < 24) {
-            releasePlayer()
-        }
+        showSystemUI(requireActivity().window, binding.videoPlayerView)
     }
 
     override fun onStop() {
         super.onStop()
-        showSystemUi()
-        if (Util.SDK_INT >= 24) {
-            releasePlayer()
-        }
-    }
-
-    private fun initializePlayer() {
-        binding.videoPlayerView.apply {
-            player = exoPlayer
-            exoPlayer.setMediaItem(MediaItem.fromUri(url))
-        }
-        exoPlayer.playWhenReady = playWhenReady
-        exoPlayer.seekTo(currentWindow, playbackPosition)
-        exoPlayer.prepare()
-    }
-
-    @SuppressLint("InlinedApi")
-    private fun hideSystemUi() {
-        WindowCompat.setDecorFitsSystemWindows(
-            requireActivity().window,
-            false
-        )
-
-        WindowInsetsControllerCompat(
-            requireActivity().window,
-            binding.videoPlayerView
-        ).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
-
-    @SuppressLint("InlinedApi")
-    private fun showSystemUi() {
-        WindowCompat.setDecorFitsSystemWindows(
-            requireActivity().window,
-            true
-        )
-
-        WindowInsetsControllerCompat(
-            requireActivity().window,
-            binding.videoPlayerView
-        ).show(WindowInsetsCompat.Type.systemBars())
-    }
-
-    private fun releasePlayer() {
-        exoPlayer.run {
-            playbackPosition = this.currentPosition
-            currentWindow = this.currentWindowIndex
-            playWhenReady = this.playWhenReady
-            release()
-        }
+        showSystemUI(requireActivity().window, binding.videoPlayerView)
     }
 }

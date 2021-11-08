@@ -3,6 +3,7 @@
     package="com.github.kadehar.cion">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".CiOnApp"
@@ -23,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".feature.movie_player_screen.service.PlayerService"
+            android:exported="false" />
     </application>
 
 </manifest>

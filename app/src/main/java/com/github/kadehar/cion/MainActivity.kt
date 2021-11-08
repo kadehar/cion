@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.github.kadehar.cion.base.nav.MoviesNavigator
 import com.github.kadehar.cion.base.nav.Screens
 import com.github.kadehar.cion.base.nav.listeners.BackButtonListener
 import com.github.terrakok.cicerone.Command
@@ -16,27 +17,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
     private val navigatorHolder by inject<NavigatorHolder>()
-    private val navigator: Navigator =
-        object : AppNavigator(this, R.id.fragmentContainerView) {
-            override fun applyCommands(commands: Array<out Command>) {
-                super.applyCommands(commands)
-                supportFragmentManager.executePendingTransactions()
-            }
-
-            override fun setupFragmentTransaction(
-                screen: FragmentScreen,
-                fragmentTransaction: FragmentTransaction,
-                currentFragment: Fragment?,
-                nextFragment: Fragment
-            ) {
-                fragmentTransaction.setCustomAnimations(
-                    R.anim.slide_in,
-                    R.anim.fade_out,
-                    R.anim.fade_in,
-                    R.anim.slide_out
-                )
-            }
-        }
+    private val navigator: Navigator = MoviesNavigator(this, R.id.fragmentContainerView)
     private val router by inject<Router>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
