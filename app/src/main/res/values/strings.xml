@@ -2,4 +2,6 @@
     <string name="app_name">Cinema Online</string>
     <string name="movie_poster">Poster</string>
     <string name="watch_movie_button">Watch movie</string>
+    <string name="notification_channel_name">Demo</string>
+    <string name="notification_channel_description">Demo video</string>
 </resources>

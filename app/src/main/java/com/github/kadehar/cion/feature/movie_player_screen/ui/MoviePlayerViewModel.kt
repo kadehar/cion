@@ -32,7 +32,7 @@ class MoviePlayerViewModel(val exoPlayer: ExoPlayer) : BaseViewModel<PlayerViewS
     fun releasePlayer() {
         exoPlayer.run {
             playbackPosition = this.currentPosition
-            currentWindow = this.currentWindowIndex
+            currentWindow = this.currentMediaItemIndex
             playWhenReady = this.playWhenReady
             release()
         }

@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".feature.movie_player_screen.ui.service.PlayerVideoService" />
+        <service android:name=".feature.movie_player_screen.service.PlayerService"
+            android:exported="false" />
     </application>
 
 </manifest>
