@@ -60,6 +60,7 @@ class ServiceNotificationsListener(
             setSmallIcon(R.drawable.ic_play_movie)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             setCategory(NotificationCompat.CATEGORY_SERVICE)
+            setPublicVersion(notification)
         }
 
         playerService.apply {
@@ -68,14 +69,16 @@ class ServiceNotificationsListener(
                     NotificationChannel(
                         PlayerService.NOTIFICATION_CHANNEL_ID,
                         PlayerService.NOTIFICATION_CHANNEL_NAME,
-                        NotificationManager.IMPORTANCE_HIGH
+                        NotificationManager.IMPORTANCE_DEFAULT
                     )
                 )
                 notificationBuilder.setChannelId(PlayerService.NOTIFICATION_CHANNEL_ID)
+                val mNotification = notificationBuilder.build()
+                startForeground(PlayerService.NOTIFICATION_ID, mNotification)
+                manager.notify(PlayerService.NOTIFICATION_ID, mNotification)
             }
-            startForeground(PlayerService.NOTIFICATION_ID, notificationBuilder.build())
+            startForeground(PlayerService.NOTIFICATION_ID, notification)
+            manager.notify(PlayerService.NOTIFICATION_ID, notification)
         }
-
-        manager.notify(PlayerService.NOTIFICATION_ID, notificationBuilder.build())
     }
 }
