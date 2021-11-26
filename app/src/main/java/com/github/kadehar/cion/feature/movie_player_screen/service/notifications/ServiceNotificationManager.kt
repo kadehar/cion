@@ -7,12 +7,15 @@ import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.github.kadehar.cion.R
+import com.github.kadehar.cion.base.utils.formatDate
 import com.github.kadehar.cion.feature.movie_player_screen.service.PlayerService
+import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
 class ServiceNotificationManager(
     private val context: Context,
+    private val movie: Movie?,
     notificationListener: PlayerNotificationManager.NotificationListener
 ) {
     private val notificationManager: PlayerNotificationManager
@@ -37,7 +40,7 @@ class ServiceNotificationManager(
 
     private inner class DescriptionsAdapter : PlayerNotificationManager.MediaDescriptionAdapter {
         override fun getCurrentContentTitle(player: Player): CharSequence {
-            return context.getString(R.string.notification_channel_name)
+            return movie?.title ?: "Unknown"
         }
 
         @RequiresApi(Build.VERSION_CODES.S)
@@ -53,7 +56,7 @@ class ServiceNotificationManager(
         }
 
         override fun getCurrentContentText(player: Player): CharSequence {
-            return context.getString(R.string.notification_channel_description)
+            return movie?.releaseDate?.let { formatDate(it) } ?: "Unknown"
         }
 
         override fun getCurrentLargeIcon(

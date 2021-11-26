@@ -15,7 +15,7 @@ object Screens {
         MovieCardFragment.newInstance(movie)
     }
 
-    fun moviePlayer(videoUrl: String) = FragmentScreen {
-        MoviePlayerFragment.newInstance(videoUrl)
+    fun moviePlayer(movie: Movie) = FragmentScreen {
+        MoviePlayerFragment.newInstance(movie)
     }
 }

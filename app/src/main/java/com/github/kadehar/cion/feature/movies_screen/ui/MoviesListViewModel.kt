@@ -35,8 +35,11 @@ class MoviesListViewModel(
                     }
                 )
             }
-            is UiEvent.OnPosterClick -> {
+            is UiEvent.OnInfoButtonClicked -> {
                 router.navigateTo(Screens.movieCard(event.movie))
+            }
+            is UiEvent.OnPlayButtonClicked -> {
+                router.navigateTo(Screens.moviePlayer(event.movie))
             }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(

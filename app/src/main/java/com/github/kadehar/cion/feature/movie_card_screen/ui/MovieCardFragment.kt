@@ -26,20 +26,13 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
     private val movie: Movie by lazy {
         requireArguments().getParcelable(MOVIE_KEY)!!
     }
-    private val viewModel by viewModel<MovieCardViewModel>() { parametersOf(movie) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             cardPoster.loadImage(movie.posterPath)
-            cardMovieTitle.text = movie.title
-            cardMovieVotes.text = movie.voteAverage.toString()
-            cardMovieReleaseDate.text = formatDate(movie.releaseDate)
             cardMovieGenres.text = genresToString(movie.genres)
             cardMovieOverview.text = movie.overview
-            cardMoviePlayButton.setOnClickListener {
-                viewModel.processUiEvent(MovieCardUiEvent.OnPlayButtonClicked(movie))
-            }
         }
     }
 }

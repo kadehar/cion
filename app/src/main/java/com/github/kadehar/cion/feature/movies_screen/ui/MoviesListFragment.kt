@@ -9,7 +9,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.kadehar.cion.R
 import com.github.kadehar.cion.base.utils.setData
 import com.github.kadehar.cion.databinding.FragmentMoviesListBinding
-import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
 import com.github.kadehar.cion.feature.movies_screen.ui.adapter.movieAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,9 +23,14 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
     private val moviesAdapter
             by lazy(LazyThreadSafetyMode.NONE) {
                 ListDelegationAdapter(
-                    movieAdapterDelegate { movie ->
-                        viewModel.processUiEvent(UiEvent.OnPosterClick(movie))
-                    }
+                    movieAdapterDelegate(
+                        onInfoButtonClick = { movie ->
+                            viewModel.processUiEvent(UiEvent.OnInfoButtonClicked(movie))
+                        },
+                        onPlayButtonClick = { movie ->
+                            viewModel.processUiEvent(UiEvent.OnPlayButtonClicked(movie))
+                        }
+                    )
                 )
             }
 
@@ -41,7 +45,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
             adapter = moviesAdapter
             layoutManager = LinearLayoutManager(
                 requireContext(),
-                LinearLayoutManager.HORIZONTAL, false
+                LinearLayoutManager.VERTICAL, false
             )
         }
     }

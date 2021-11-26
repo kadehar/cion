@@ -19,10 +19,6 @@ import com.google.android.exoplayer2.ui.PlayerNotificationManager
 class ServiceNotificationsListener(
     private val playerService: PlayerService
 ) : PlayerNotificationManager.NotificationListener {
-
-    private val remoteView
-            by lazy { RemoteViews(playerService.packageName, R.layout.fragment_movie_player) }
-
     private val manager =
         playerService.getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
@@ -47,20 +43,13 @@ class ServiceNotificationsListener(
             PlayerService.NOTIFICATION_CHANNEL_ID
         )
 
-        val playerIntent = PendingIntent.getService(
-            playerService.applicationContext,
-            0,
-            Intent(playerService.applicationContext, PlayerService::class.java),
-            PendingIntent.FLAG_MUTABLE
-        )
-
         notificationBuilder.apply {
-            setContent(remoteView)
-            addAction(R.drawable.ic_play_movie, "VideoPlayer", playerIntent)
             setSmallIcon(R.drawable.ic_play_movie)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             setCategory(NotificationCompat.CATEGORY_SERVICE)
             setPublicVersion(notification)
+            setAutoCancel(true)
+            setOngoing(true)
         }
 
         playerService.apply {

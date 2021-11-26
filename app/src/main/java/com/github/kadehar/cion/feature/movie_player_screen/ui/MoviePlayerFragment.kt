@@ -16,21 +16,22 @@ import com.github.kadehar.cion.base.utils.hideSystemUI
 import com.github.kadehar.cion.base.utils.showSystemUI
 import com.github.kadehar.cion.databinding.FragmentMoviePlayerBinding
 import com.github.kadehar.cion.feature.movie_player_screen.service.PlayerService
+import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
 
 
 class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
     companion object {
-        private const val URL_KEY = "url"
-        fun newInstance(url: String) = MoviePlayerFragment().apply {
-            arguments = bundleOf(Pair(URL_KEY, url))
+        private const val MOVIE_KEY = "movie"
+        fun newInstance(movie: Movie) = MoviePlayerFragment().apply {
+            arguments = bundleOf(Pair(MOVIE_KEY, movie))
         }
     }
 
     private val binding: FragmentMoviePlayerBinding
             by viewBinding(FragmentMoviePlayerBinding::bind)
 
-    private val url: String by lazy {
-        requireArguments().getString(URL_KEY)!!
+    private val movie: Movie by lazy {
+        requireArguments().getParcelable(MOVIE_KEY)!!
     }
 
     private val playerActivity: FragmentActivity by lazy {
@@ -52,7 +53,7 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val intent = Intent(context, PlayerService::class.java)
-        intent.putExtra(PlayerService.VIDEO_FILE, url)
+        intent.putExtra(PlayerService.VIDEO_FILE, movie)
         playerActivity.bindService(intent, connection, Context.BIND_AUTO_CREATE)
     }
 

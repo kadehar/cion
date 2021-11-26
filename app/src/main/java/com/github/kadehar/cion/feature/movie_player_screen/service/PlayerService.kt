@@ -7,6 +7,7 @@ import android.os.IBinder
 import com.github.kadehar.cion.feature.movie_player_screen.service.notifications.ServiceEventsListener
 import com.github.kadehar.cion.feature.movie_player_screen.service.notifications.ServiceNotificationManager
 import com.github.kadehar.cion.feature.movie_player_screen.service.notifications.ServiceNotificationsListener
+import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import org.koin.android.ext.android.inject
@@ -24,26 +25,23 @@ class PlayerService : Service() {
     private var isReady = true
     private var currentMedia: MediaItem? = null
     private var playbackPosition = 0L
+    private var movie: Movie? = null
 
-    private val notificationManager: ServiceNotificationManager by lazy {
-        ServiceNotificationManager(
-            this,
-            ServiceNotificationsListener(this)
-        )
-    }
+    private lateinit var notificationManager: ServiceNotificationManager
     private val eventsListener: ServiceEventsListener by lazy {
         ServiceEventsListener(this)
     }
 
     override fun onBind(intent: Intent?): IBinder {
-        val media = intent?.getStringExtra(VIDEO_FILE) ?: ""
-        preparePlayer(media)
-        return PlayerServiceBinder()
-    }
-
-    override fun onCreate() {
-        super.onCreate()
+        movie = intent?.extras?.getParcelable(VIDEO_FILE)
+        preparePlayer(movie?.video ?: "")
+        notificationManager = ServiceNotificationManager(
+            this,
+            movie,
+            ServiceNotificationsListener(this)
+        )
         notificationManager.showNotification(exoPlayer)
+        return PlayerServiceBinder()
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
