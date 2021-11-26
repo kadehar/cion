@@ -14,20 +14,20 @@ CiOn supports two themes - Light and Dark. You can toggle it in your smartphone 
 
 ## Screens
 ### Main Screen
-On the Main Screen you will see some movies posters, which you can scroll horizontally.<br>
-Tap on the poster will open Movie Card Screen. <br>
-![](readmeFiles/mainScreenSample.gif)
+On the _Main Screen_ you will see some movies cards, which you can scroll vertically.<br>
+Tap on the info icon to open _About Movie Screen_. <br>
+Tap on the play icon to open _Video Player Screen_. <br>
+You can see it in demo section below in the _Demo_. <br>
+![](readmeFiles/cion_mainscreen.gif)
 
-### Movie Card Screen
-On the Movie Card Screen you will see detailed info about a film, such as genres, rate, overview <br>
-and play button.<br>
-Tap on the button will start Video Player. <br>
-![](readmeFiles/movieCardSample.gif)
+### About Movie Screen
+On the _About Movie Screen_ you will see film poster, genres and overview <br>
+![](readmeFiles/cion_about_screen.gif)
 
 ### Video Player Screen
-On the Video Player Screen you will watch selected movie in full screen mode. <br>
-![](readmeFiles/videoPlayerSample.gif)
+On the _Video Player Screen_ you will watch selected movie in full screen mode. <br>
+![](readmeFiles/cion_player_screen.gif)
 
 ## Demo
 Below you can see a demo of CiOn application. <br>
-![](readmeFiles/demo.gif)
+![](readmeFiles/cion_demo.gif)

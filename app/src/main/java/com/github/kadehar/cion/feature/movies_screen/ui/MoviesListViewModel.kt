@@ -36,7 +36,7 @@ class MoviesListViewModel(
                 )
             }
             is UiEvent.OnInfoButtonClicked -> {
-                router.navigateTo(Screens.movieCard(event.movie))
+                router.navigateTo(Screens.aboutMovie(event.movie))
             }
             is UiEvent.OnPlayButtonClicked -> {
                 router.navigateTo(Screens.moviePlayer(event.movie))
