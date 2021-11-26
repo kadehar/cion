@@ -13,7 +13,8 @@ data class ViewState(
 
 sealed class UiEvent : Event {
     object FetchMovies : UiEvent()
-    data class OnPosterClick(val movie: Movie) : UiEvent()
+    data class OnInfoButtonClicked(val movie: Movie) : UiEvent()
+    data class OnPlayButtonClicked(val movie: Movie) : UiEvent()
 }
 
 sealed class DataEvent : Event {

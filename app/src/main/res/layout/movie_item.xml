@@ -1,24 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="?attr/colorBackground">
 
     <com.google.android.material.card.MaterialCardView
         style="@style/Base.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:padding="16dp">
+        android:layout_margin="8dp">
 
-        <ImageView
-            android:id="@+id/moviePoster"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:contentDescription="@string/movie_poster"
-            tools:srcCompat="@drawable/ic_placeholder" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/moviePoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:contentDescription="@string/movie_poster"
+                    android:scaleType="fitXY"
+                    android:foreground="@drawable/poster_image_gradient"
+                    tools:srcCompat="@drawable/ic_placeholder" />
+
+                <TextView
+                    android:id="@+id/moviePosterRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:textAppearance="@style/H3Heading"
+                    android:textColor="?attr/colorOnPrimary"
+                    tools:text="8.5" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/moviePosterTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H3Heading"
+                    android:textColor="?attr/colorAccented"
+                    tools:text="@string/app_name" />
+
+
+                <TextView
+                    android:id="@+id/moviePosterDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="@style/TextContent"
+                    tools:text="2021" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/moviePosterInfoButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/about_movie"
+                    app:srcCompat="@drawable/ic_info_icon" />
+
+                <ImageView
+                    android:id="@+id/moviePosterPlayMovieButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/watch_movie_button"
+                    app:srcCompat="@drawable/ic_play_circle_icon" />
+            </LinearLayout>
+
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

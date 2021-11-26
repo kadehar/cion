@@ -3,16 +3,15 @@ package com.github.kadehar.cion.di
 import com.github.kadehar.cion.base.constants.Constants.BASE_MOVIES_URL
 import com.github.kadehar.cion.base.network.httpCache10Mb
 import com.github.kadehar.cion.base.network.okHttp
-import com.github.kadehar.cion.feature.movie_player_screen.ui.MoviePlayerViewModel
+import com.github.kadehar.cion.feature.movies_screen.data.api.MoviesRepository
+import com.github.kadehar.cion.player.PlayerMediaSource
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.SimpleExoPlayer
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,7 +49,7 @@ val videoPlayerModule = module {
         ExoPlayer.Builder(androidApplication()).build()
     }
 
-    viewModel<MoviePlayerViewModel> {
-        MoviePlayerViewModel(get<ExoPlayer>())
+    factory<PlayerMediaSource> {
+        PlayerMediaSource(moviesRepository = get<MoviesRepository>())
     }
 }
