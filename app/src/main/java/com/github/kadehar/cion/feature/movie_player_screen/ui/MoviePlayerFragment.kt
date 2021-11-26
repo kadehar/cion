@@ -9,14 +9,14 @@ import android.os.IBinder
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.kadehar.cion.R
+import com.github.kadehar.cion.base.constants.Constants.MEDIA_FILE
 import com.github.kadehar.cion.base.utils.hideSystemUI
 import com.github.kadehar.cion.base.utils.showSystemUI
 import com.github.kadehar.cion.databinding.FragmentMoviePlayerBinding
-import com.github.kadehar.cion.feature.movie_player_screen.service.PlayerService
 import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
+import com.github.kadehar.cion.player.PlayerVideoService
 
 
 class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
@@ -34,17 +34,13 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
         requireArguments().getParcelable(MOVIE_KEY)!!
     }
 
-    private val playerActivity: FragmentActivity by lazy {
-        requireActivity()
-    }
-
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {}
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             when (service) {
-                is PlayerService.PlayerServiceBinder -> {
-                    binding.videoPlayerView.player = service.getPlayer()
+                is PlayerVideoService.PlayerServiceBinder -> {
+                    binding.videoPlayerView.player = service.getService().exoPlayer
                 }
             }
         }
@@ -52,14 +48,14 @@ class MoviePlayerFragment : Fragment(R.layout.fragment_movie_player) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val intent = Intent(context, PlayerService::class.java)
-        intent.putExtra(PlayerService.VIDEO_FILE, movie)
-        playerActivity.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        val intent = Intent(context, PlayerVideoService::class.java)
+        intent.putExtra(MEDIA_FILE, movie)
+        requireActivity().bindService(intent, connection, Context.BIND_AUTO_CREATE)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        playerActivity.unbindService(connection)
+        requireActivity().unbindService(connection)
     }
 
     override fun onStart() {

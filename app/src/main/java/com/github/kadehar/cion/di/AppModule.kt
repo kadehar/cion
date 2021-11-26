@@ -3,6 +3,8 @@ package com.github.kadehar.cion.di
 import com.github.kadehar.cion.base.constants.Constants.BASE_MOVIES_URL
 import com.github.kadehar.cion.base.network.httpCache10Mb
 import com.github.kadehar.cion.base.network.okHttp
+import com.github.kadehar.cion.feature.movies_screen.data.api.MoviesRepository
+import com.github.kadehar.cion.player.PlayerMediaSource
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
@@ -45,5 +47,9 @@ val navModule = module {
 val videoPlayerModule = module {
     factory<ExoPlayer> {
         ExoPlayer.Builder(androidApplication()).build()
+    }
+
+    factory<PlayerMediaSource> {
+        PlayerMediaSource(moviesRepository = get<MoviesRepository>())
     }
 }
