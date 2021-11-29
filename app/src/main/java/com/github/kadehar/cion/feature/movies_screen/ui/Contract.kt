@@ -15,6 +15,7 @@ sealed class UiEvent : Event {
     object FetchMovies : UiEvent()
     data class OnInfoButtonClicked(val movie: Movie) : UiEvent()
     data class OnPlayButtonClicked(val movie: Movie) : UiEvent()
+    object OnRetryClicked : UiEvent()
 }
 
 sealed class DataEvent : Event {

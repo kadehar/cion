@@ -6,4 +6,6 @@
     <string name="notification_channel_name">Demo</string>
     <string name="notification_channel_description">Demo video</string>
     <string name="about_movie">About movie</string>
+    <string name="error_text">Ooops! Something went wrong!</string>
+    <string name="retry_text">Try again</string>
 </resources>
