@@ -41,6 +41,10 @@ class MoviesListViewModel(
             is UiEvent.OnPlayButtonClicked -> {
                 router.navigateTo(Screens.moviePlayer(event.movie))
             }
+            is UiEvent.OnRetryClicked -> {
+                router.newRootScreen(Screens.movieListScreen())
+                processUiEvent(UiEvent.FetchMovies)
+            }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(
                     movies = event.movies,
@@ -48,9 +52,7 @@ class MoviesListViewModel(
                 )
             }
             is DataEvent.ErrorMoviesRequest -> {
-                return previousState.copy(
-                    errorMessage = event.errorMessage
-                )
+                router.navigateTo(Screens.errorsScreen())
             }
         }
         return null

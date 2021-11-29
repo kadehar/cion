@@ -1,6 +1,7 @@
 package com.github.kadehar.cion.base.nav
 
 import com.github.kadehar.cion.feature.about_movie_screen.ui.AboutMovieFragment
+import com.github.kadehar.cion.feature.errors_screen.ui.ErrorsScreenFragment
 import com.github.kadehar.cion.feature.movie_player_screen.ui.MoviePlayerFragment
 import com.github.kadehar.cion.feature.movies_screen.domain.model.Movie
 import com.github.kadehar.cion.feature.movies_screen.ui.MoviesListFragment
@@ -17,5 +18,9 @@ object Screens {
 
     fun moviePlayer(movie: Movie) = FragmentScreen {
         MoviePlayerFragment.newInstance(movie)
+    }
+
+    fun errorsScreen() = FragmentScreen {
+        ErrorsScreenFragment.newInstance()
     }
 }

@@ -42,5 +42,7 @@
     <color name="grey_300">#F4F5F6</color>
     <color name="grey_200">#F7F7F7</color>
 
+    <color name="purple_500">#FF6200EE</color>
+
     <color name="transparent">#00000000</color>
 </resources>
